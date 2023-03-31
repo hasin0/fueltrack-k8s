@@ -31,3 +31,6 @@ step 1: minikube ssh docker pull hasino2258/fueltrack:v2
 
 step 2: create your deployment
 step 3:create your services
+
+
+fueltrack-configmap

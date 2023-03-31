@@ -2,6 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fueltrack-deployment
+  namespace: fueltrack # namespace specified here
+  labels:
+    app: fueltrack
 spec:
   replicas: 3
   selector:
@@ -17,6 +20,89 @@ spec:
         image: hasino2258/fueltrack:v2
         ports:
         - containerPort: 9001
+        envFrom:
+        - configMapRef:
+            name: fueltrack-configmap
+        env:
+
+        - name: MYSQL_DATABASE
+          value: fueltrack
+
+        - name: MYSQL_HOST
+          value: mysql-service
+        - name: MYSQL_PORT
+          value: "3306"
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_USER
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_PASSWORD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: fueltrack-deployment
+# spec:
+#   replicas: 3
+#   selector:
+#     matchLabels:
+#       app: fueltrack
+#   template:
+#     metadata:
+#       labels:
+#         app: fueltrack
+#     spec:
+#       containers:
+#       - name: fueltrack
+#         image: hasino2258/fueltrack:v2
+#         ports:
+#         - containerPort: 9001
+#         envFrom:
+#         - configMapRef:
+#             name: fueltrack-configmap
+#             env:
+#             - name: MYSQL_HOST
+#               value: mysql-service
+#             - name: MYSQL_PORT
+#               value: 3306
+#             - name: MYSQL_USER
+#               valueFrom:
+#                 secretKeyRef:
+#                   name: mysql-secret
+#                   key: username
+#             - name: MYSQL_PASSWORD
+#               valueFrom:
+#                 secretKeyRef:
+#                   name: mysql-secret
+#                   key: password
 
 
 ---

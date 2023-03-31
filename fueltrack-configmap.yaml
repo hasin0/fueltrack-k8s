@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fueltrack-configmap
+  namespace: fueltrack # namespace specified here
+data:
+  APP_NAME: Laravel
+  APP_ENV: production
+  APP_KEY: base64:AvQEUYQ4fSeMu/gNvXoh+GsYdzicDtB8ubJQ32xU09Y=
+  APP_DEBUG: "false"
+  APP_URL: http://192.168.49.2:31011
+
+
+
+
+
+
+
+
+
+
+
+
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: fueltrack-configmap
+# data:
+#   APP_NAME: Laravel
+#   APP_ENV: local
+#   APP_KEY: base64:AvQEUYQ4fSeMu/gNvXoh+GsYdzicDtB8ubJQ32xU09Y=
+#   APP_DEBUG: "false"
+#   APP_URL: http://192.168.49.2:31011
+#   DB_CONNECTION: mysql
+#   DB_HOST: mysql-service
+#   DB_PORT: "3306"
+#   DB_DATABASE: fueltrack
+#   DB_USERNAME: root
+#   DB_PASSWORD: root
