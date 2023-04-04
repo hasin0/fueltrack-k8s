@@ -34,3 +34,9 @@ step 3:create your services
 
 
 fueltrack-configmap
+apt-get update -y
+apt-get install -y iputils-ping
+
+
+kubectl config set-context --current --namespace=fueltrack
+172-17-0-17

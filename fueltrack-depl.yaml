@@ -17,31 +17,31 @@ spec:
     spec:
       containers:
       - name: fueltrack
-        image: hasino2258/fueltrack:v2
+        image: hasino2258/fueltrack:2.1
         ports:
         - containerPort: 9001
         envFrom:
         - configMapRef:
             name: fueltrack-configmap
-        env:
+            # env:
 
-        - name: MYSQL_DATABASE
-          value: fueltrack
+            # - name: MYSQL_DATABASE
+            #   value: fueltrack
 
-        - name: MYSQL_HOST
-          value: mysql-service
-        - name: MYSQL_PORT
-          value: "3306"
-        - name: MYSQL_USER
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: MYSQL_USER
-        - name: MYSQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: MYSQL_PASSWORD
+            # - name: MYSQL_HOST
+            #   value: mysql-service
+            # - name: MYSQL_PORT
+            #   value: "3306"
+            # - name: MYSQL_USER
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: mysql-secret
+            #       key: MYSQL_USER
+            # - name: MYSQL_PASSWORD
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: mysql-secret
+            #       key: MYSQL_PASSWORD
 
 
 
