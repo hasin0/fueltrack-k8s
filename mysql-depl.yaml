@@ -17,7 +17,6 @@ spec:
       - name: mysql
         image: mysql:5.7
         env:
-
         - name: MYSQL_DATABASE
           value: fueltrack
         - name: MYSQL_USER
@@ -30,15 +29,21 @@ spec:
             secretKeyRef:
               name: mysql-secret
               key: MYSQL_ROOT_PASSWORD
-
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mysql-secret
               key: MYSQL_PASSWORD
-
         ports:
         - containerPort: 3306
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql # mount path in the container
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pvc # name of the persistent volume claim
+
 
 ---
 

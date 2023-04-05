@@ -15,6 +15,10 @@ spec:
       labels:
         app: fueltrack
     spec:
+      volumes:
+      - name: fueltrack-persistent-storage
+        persistentVolumeClaim:
+          claimName: fueltrack-pvc
       containers:
       - name: fueltrack
         image: hasino2258/fueltrack:2.1
@@ -23,25 +27,9 @@ spec:
         envFrom:
         - configMapRef:
             name: fueltrack-configmap
-            # env:
-
-            # - name: MYSQL_DATABASE
-            #   value: fueltrack
-
-            # - name: MYSQL_HOST
-            #   value: mysql-service
-            # - name: MYSQL_PORT
-            #   value: "3306"
-            # - name: MYSQL_USER
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: mysql-secret
-            #       key: MYSQL_USER
-            # - name: MYSQL_PASSWORD
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: mysql-secret
-            #       key: MYSQL_PASSWORD
+        volumeMounts:
+        - name: fueltrack-persistent-storage
+          mountPath: /app/data
 
 
 
