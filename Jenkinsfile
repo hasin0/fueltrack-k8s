@@ -8,7 +8,7 @@ pipeline {
   agent any
 
   stages {
-    stage('Install Docker')
+    // stage('Install Docker')
     //  {
     //   steps {
     //     sh '''
