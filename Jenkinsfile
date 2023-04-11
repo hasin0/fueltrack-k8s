@@ -8,27 +8,28 @@ pipeline {
   agent any
 
   stages {
-    stage('Install Docker') {
-      steps {
-        sh '''
-          # Add Docker repository
-          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    stage('Install Docker')
+    //  {
+    //   steps {
+    //     sh '''
+    //       # Add Docker repository
+    //       curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    //       sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
-          # Update package index
-          sudo apt-get update
+    //       # Update package index
+    //       sudo apt-get update
 
-          # Install Docker
-          sudo apt-get install docker-ce
+    //       # Install Docker
+    //       sudo apt-get install docker-ce
 
-          # Add Jenkins user to docker group
-          sudo usermod -aG docker jenkins
+    //       # Add Jenkins user to docker group
+    //       sudo usermod -aG docker jenkins
 
-          # Restart Docker service
-          sudo systemctl restart docker
-        '''
-      }
-    }
+    //       # Restart Docker service
+    //       sudo systemctl restart docker
+    //     '''
+    //   }
+    // }
 
     stage('Checkout Source') {
       steps {
