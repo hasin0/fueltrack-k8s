@@ -16,7 +16,7 @@ spec:
         app: fueltrack
     spec:
       volumes:
-      - name: fueltrack-persistent-storage
+      - name: fueltrack-pv
         persistentVolumeClaim:
           claimName: fueltrack-pvc
       containers:
@@ -28,8 +28,8 @@ spec:
         - configMapRef:
             name: fueltrack-configmap
         volumeMounts:
-        - name: fueltrack-persistent-storage
-          mountPath: /app/data
+        - name: fueltrack-pv
+          mountPath: /var/www/html/storage
 
 
 
