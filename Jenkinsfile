@@ -1,5 +1,4 @@
 pipeline {
-
   environment {
     dockerimagename = "hasino2258/fueltrack:2.1"
     dockerImage = ""
@@ -8,11 +7,14 @@ pipeline {
   agent any
 
   stages {
-      stage('Install Docker') {
+    stage('Install Docker') {
       steps {
         script {
-          dockerTool = dockerTool installationName: 'default'
-          sh "${dockerTool}/bin/docker info"
+          def dockerTool = tool 'docker'
+          dockerTool.build('docker', 'latest')
+          dockerTool.inside("--privileged -v /var/run/docker.sock:/var/run/docker.sock") {
+            sh "docker info"
+          }
         }
       }
     }
@@ -54,6 +56,74 @@ pipeline {
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// pipeline {
+
+//   environment {
+//     dockerimagename = "hasino2258/fueltrack:2.1"
+//     dockerImage = ""
+//   }
+
+//   agent any
+
+//   stages {
+//       stage('Install Docker') {
+//       steps {
+//         script {
+//           dockerTool = dockerTool installationName: 'default'
+//           sh "${dockerTool}/bin/docker info"
+//         }
+//       }
+//     }
+
+//     stage('Checkout Source') {
+//       steps {
+//         git 'https://github.com/hasin0/fueltrack-k8s.git'
+//       }
+//     }
+
+//     stage('Build image') {
+//       steps {
+//         script {
+//           dockerImage = docker.build dockerimagename
+//         }
+//       }
+//     }
+
+//     stage('Pushing Image') {
+//       environment {
+//         registryCredential = 'docker-hub cred'
+//       }
+//       steps {
+//         script {
+//           docker.build dockerimagename
+//           docker.withRegistry("https://registry.hub.docker.com", registryCredential) {
+//             docker.push dockerimagename
+//           }
+//         }
+//       }
+//     }
+
+//     stage('Deploying Laravel container to Kubernetes') {
+//       steps {
+//         script {
+//           kubernetesDeploy(configs: "fueltrack-depl.yaml", "fueltrack-service")
+//         }
+//       }
+//     }
+//   }
+// }
 
 
 
