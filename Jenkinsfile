@@ -1,42 +1,23 @@
 pipeline {
-
   environment {
     dockerimagename = "hasino2258/fueltrack:2.1"
     dockerImage = ""
   }
-
   agent any
-
   stages {
-    stage('Install Docker')
-     {
+    stage('Install Docker') {
       steps {
-        sh '''
-          # Add Docker repository
-          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-
-          # Update package index
-          sudo apt-get update
-
-          # Install Docker
-          sudo apt-get install docker-ce
-
-          # Add Jenkins user to docker group
-          sudo usermod -aG docker jenkins
-
-          # Restart Docker service
-          sudo systemctl restart docker
-        '''
+        script {
+          dockerTool = dockerTool installationName: 'default'
+          sh "${dockerTool}/bin/docker info"
+        }
       }
     }
-
     stage('Checkout Source') {
       steps {
         git 'https://github.com/hasin0/fueltrack-k8s.git'
       }
     }
-
     stage('Build image') {
       steps {
         script {
@@ -44,7 +25,6 @@ pipeline {
         }
       }
     }
-
     stage('Pushing Image') {
       environment {
         registryCredential = 'docker-cred'
@@ -58,16 +38,88 @@ pipeline {
         }
       }
     }
-
     stage('Deploying Laravel container to Kubernetes') {
       steps {
         script {
-          kubernetesDeploy(configs: "fueltrack-depl.yaml", "fueltrack-service")
+          kubernetesDeploy(configs: "fueltrack-depl.yaml", serviceName: "fueltrack-service")
         }
       }
     }
   }
 }
+
+
+
+// pipeline {
+
+//   environment {
+//     dockerimagename = "hasino2258/fueltrack:2.1"
+//     dockerImage = ""
+//   }
+
+//   agent any
+
+//   stages {
+//     stage('Install Docker')
+//      {
+//       steps {
+//         sh '''
+//           # Add Docker repository
+//           curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+//           sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+//           # Update package index
+//           sudo apt-get update
+
+//           # Install Docker
+//           sudo apt-get install docker-ce
+
+//           # Add Jenkins user to docker group
+//           sudo usermod -aG docker jenkins
+
+//           # Restart Docker service
+//           sudo systemctl restart docker
+//         '''
+//       }
+//     }
+
+//     stage('Checkout Source') {
+//       steps {
+//         git 'https://github.com/hasin0/fueltrack-k8s.git'
+//       }
+//     }
+
+//     stage('Build image') {
+//       steps {
+//         script {
+//           dockerImage = docker.build dockerimagename
+//         }
+//       }
+//     }
+
+//     stage('Pushing Image') {
+//       environment {
+//         registryCredential = 'docker-cred'
+//       }
+//       steps {
+//         script {
+//           docker.build dockerimagename
+//           docker.withRegistry("https://registry.hub.docker.com", registryCredential) {
+//             docker.push dockerimagename
+//           }
+//         }
+//       }
+//     }
+
+//     stage('Deploying Laravel container to Kubernetes') {
+//       steps {
+//         script {
+//           kubernetesDeploy(configs: "fueltrack-depl.yaml", "fueltrack-service")
+//         }
+//       }
+//     }
+//   }
+// }
 
 
 
