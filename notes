@@ -42,14 +42,25 @@ kubectl config set-context --current --namespace=fueltrack
 172-17-0-17
 
 
+kubectl exec -it mysql-depl-688c748864-svph9 -- /bin/bash
 
+kubectl exec -it <mysql-pod-name> -- top
+kubectl exec -it mysql-depl-688c748864-svph9 -- top
+mysql -u hassan -p
+
+
+GRANT ALL PRIVILEGES ON *.* TO 'hassan'@'fueltrack-service' IDENTIFIED BY 'hassan';
+
+ALTER USER 'hassan'@'fueltrack-service' IDENTIFIED WITH mysql_native_password BY 'hassan';
 
 kubectl delete --all pods,services,deployments --namespace=my
 
 kubectl delete all --all -n fueltrack
 
+CREATE USER 'hassan'@'fueltrack-service' IDENTIFIED BY 'passpass';
 
 
+mysql -u root -p
 
 
 apiVersion: apps/v1
