@@ -5,21 +5,13 @@ pipeline {
   }
   agent any
   stages {
-    stage('Install Docker') {
-      steps {
-        script {
-          dockerTool = dockerTool installationName: 'default'
-          sh "${dockerTool}/bin/docker info"
-        }
-      }
-    }
     stage('Checkout Source') {
       steps {
         git 'https://github.com/hasin0/fueltrack-k8s.git'
       }
     }
     stage('Build image') {
-      steps {
+      steps{
         script {
           dockerImage = docker.build dockerimagename
         }
@@ -29,16 +21,15 @@ pipeline {
       environment {
         registryCredential = 'docker-cred'
       }
-      steps {
+      steps{
         script {
-          docker.build dockerimagename
-          docker.withRegistry("https://registry.hub.docker.com", registryCredential) {
-            docker.push dockerimagename
+          docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
+            dockerImage.push("latest")
           }
         }
       }
     }
-    stage('Deploying Laravel container to Kubernetes') {
+    stage('Deploying App to Kubernetes') {
       steps {
         script {
           kubernetesDeploy(configs: "fueltrack-depl.yaml", serviceName: "fueltrack-service")
@@ -47,6 +38,90 @@ pipeline {
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// pipeline {
+//   environment {
+//     dockerimagename = "hasino2258/fueltrack:2.1"
+//     dockerImage = ""
+//   }
+//   agent any
+//   stages {
+//     stage('Install Docker') {
+//       steps {
+//         script {
+//           dockerTool = dockerTool installationName: 'default'
+//           sh "${dockerTool}/bin/docker info"
+//         }
+//       }
+//     }
+//     stage('Checkout Source') {
+//       steps {
+//         git 'https://github.com/hasin0/fueltrack-k8s.git'
+//       }
+//     }
+//     stage('Build image') {
+//       steps {
+//         script {
+//           dockerImage = docker.build dockerimagename
+//         }
+//       }
+//     }
+//     stage('Pushing Image') {
+//       environment {
+//         registryCredential = 'docker-cred'
+//       }
+//       steps {
+//         script {
+//           docker.build dockerimagename
+//           docker.withRegistry("https://registry.hub.docker.com", registryCredential) {
+//             docker.push dockerimagename
+//           }
+//         }
+//       }
+//     }
+//     stage('Deploying Laravel container to Kubernetes') {
+//       steps {
+//         script {
+//           kubernetesDeploy(configs: "fueltrack-depl.yaml", serviceName: "fueltrack-service")
+//         }
+//       }
+//     }
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
