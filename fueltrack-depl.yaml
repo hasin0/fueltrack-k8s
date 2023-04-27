@@ -54,7 +54,7 @@ spec:
     spec:
       containers:
       - name: fueltrack
-        image: hasino2258/fueltrack:2.1
+        image: hasino2258/fueltrack:latest
         ports:
         - containerPort: 9001
         envFrom:

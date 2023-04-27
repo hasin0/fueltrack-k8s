@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    dockerimagename = "hasino2258/fueltrack:2.1"
+    dockerimagename = "hasino2258/fueltrack:latest"
     dockerImage = ""
   }
   agent any
@@ -9,6 +9,11 @@ pipeline {
       steps {
         git 'https://github.com/hasin0/fueltrack-k8s.git'
       }
+    }
+    // stage('Add Jenkins user to Docker group') {
+    //   steps {
+    //     sh 'sudo usermod -aG docker jenkins'
+    //   }
     }
     stage('Build image') {
       steps{

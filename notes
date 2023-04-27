@@ -204,3 +204,138 @@ spec:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
           claimName: mysql-pvc # name of the persistent volume claim
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# pipeline {
+#   environment {
+#     dockerimagename = "hasino2258/fueltrack:2.1"
+#     dockerImage = ""
+#   }
+#   agent any
+#   stages {
+#     // stage('Change owner of Jenkins home directory') {
+#     //   steps {
+#     //     sh 'sudo chown -R $USER:$USER /var/jenkins_home'
+#     //   }
+#     // }
+#     stage('Checkout Source') {
+#       steps {
+#         git 'https://github.com/hasin0/fueltrack-k8s.git'
+#       }
+#     }
+#     stage('Build image') {
+#       steps{
+#         script {
+#           dockerImage = docker.build dockerimagename
+#         }
+#       }
+#     }
+#     stage('Pushing Image') {
+#       environment {
+#         registryCredential = 'docker-cred'
+#       }
+#       steps{
+#         script {
+#           docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
+#             dockerImage.push("latest")
+#           }
+#         }
+#       }
+#     }
+#     stage('Deploying App to Kubernetes') {
+#       steps {
+#         script {
+#           kubernetesDeploy(configs: "fueltrack-depl.yaml", serviceName: "fueltrack-service")
+#         }
+#       }
+#     }
+#   }
+# }
+
+
+
+
+
+# pipeline {
+#   agent any
+#   environment {
+#     DOCKER_REGISTRY = 'myregistry.com'
+#     DOCKER_REPO = 'myrepo'
+#     DOCKER_TAG = 'latest'
+#     DOCKER_IMAGE = "${DOCKER_REGISTRY}/${DOCKER_REPO}:${DOCKER_TAG}"
+#   }
+#   stages {
+#     stage('Checkout') {
+#       steps {
+#         git 'https://github.com/myorg/myrepo.git'
+#       }
+#     }
+#     stage('Build Docker image') {
+#       steps {
+#         sh 'docker build -t ${DOCKER_IMAGE} .'
+#       }
+#     }
+#     stage('Push Docker image') {
+#       steps {
+#         withCredentials([usernamePassword(credentialsId: 'myregistry-creds', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+#           sh "docker login ${DOCKER_REGISTRY} -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+#           sh "docker push ${DOCKER_IMAGE}"
+#         }
+#       }
+#     }
+#   }
+# }
+
+
+
+# pipeline {
+#   agent any
+#   options {
+#     buildDiscarder(logRotator(numToKeepStr: '5'))
+#   }
+#   environment {
+#     DOCKERHUB_CREDENTIALS = credentials('docker-cred')
+      # dockerimagename = "hasino2258/fueltrack:2.1"
+      # dockerImage = ""
+#   }
+#   stages {
+#     stage('Build') {
+#       steps {
+#         sh 'docker build -t lloydmatereke/jenkins-docker-hub .'
+#       }
+#     }
+#     stage('Login') {
+#       steps {
+#         sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+#       }
+#     }
+#     stage('Push') {
+#       steps {
+#         sh 'docker push lloydmatereke/jenkins-docker-hub'
+#       }
+#     }
+#   }
+#   post {
+#     always {
+#       sh 'docker logout'
+#     }
+#   }
+# }
