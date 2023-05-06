@@ -49,7 +49,7 @@ kubectl exec -it mysql-depl-688c748864-svph9 -- top
 mysql -u hassan -p
 
 
-GRANT ALL PRIVILEGES ON *.* TO 'hassan'@'fueltrack-service' IDENTIFIED BY 'hassan';
+GRANT ALL PRIVILEGES ON *.* TO 'hassplsan'@'fueltrack-service' IDENTIFIED BY 'hassan';
 
 ALTER USER 'hassan'@'fueltrack-service' IDENTIFIED WITH mysql_native_password BY 'hassan';
 
@@ -63,7 +63,7 @@ CREATE USER 'hassan'@'fueltrack-service' IDENTIFIED BY 'passpass';
 mysql -u root -p
 
 
-apiVersion: apps/v1
+apiVersion: apps/v1pls
 kind: Deployment
 metadata:
   name: mysql-depl
@@ -108,7 +108,7 @@ spec:
 
         - name: MYSQL_PASSWORD
           valueFrom:
-            secretKeyRef:
+            secretKeyRef:pls
               name: mysql-secret
               key: MYSQL_PASSWORD
 
@@ -176,7 +176,7 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: mysql:5.7
+        image: mysql:5.7pls
         env:
         - name: MYSQL_DATABASE
           value: fueltrack
@@ -229,7 +229,7 @@ spec:
 #     dockerimagename = "hasino2258/fueltrack:2.1"
 #     dockerImage = ""
 #   }
-#   agent any
+#   agent anypls
 #   stages {
 #     // stage('Change owner of Jenkins home directory') {
 #     //   steps {
@@ -239,7 +239,7 @@ spec:
 #     stage('Checkout Source') {
 #       steps {
 #         git 'https://github.com/hasin0/fueltrack-k8s.git'
-#       }
+#       }pls
 #     }
 #     stage('Build image') {
 #       steps{
@@ -292,7 +292,7 @@ spec:
 #       steps {
 #         sh 'docker build -t ${DOCKER_IMAGE} .'
 #       }
-#     }
+#     }pls
 #     stage('Push Docker image') {
 #       steps {
 #         withCredentials([usernamePassword(credentialsId: 'myregistry-creds', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
@@ -339,3 +339,28 @@ spec:
 #     }
 #   }
 # }
+
+
+
+kubectl cluster-info
+
+
+Kubernetes control plane is running at https://192.168.49.2:8443
+
+
+Unable to create application: application spec for fueltrack is invalid: InvalidSpecError: Unable to generate manifests in .: rpc error: code = Unknown desc = Unable to resolve 'main' to a commit SHA
+
+
+
+
+
+
+
+
+
+EXTERNAL VARIABLES
+No items
+INCLUDE
+EXCLUDE
+Unable to create application: application spec for fueltrack is invalid: InvalidSpecError: Unable to generate manifests in .: rpc error: code = FailedPrecondition desc = Failed to unmarshal "composer.json": Object 'Kind' is missing in '{ "name": "laravel/laravel", "type": "project", "description": "The Laravel Framework.", "keywords": ["framework", "laravel"], "license": "MIT", "require": { "php": "^7.3|^8.0", "barryvdh/laravel-dompdf": "^2.0", "fruitcake/laravel-cors": "^2.0", "guzzlehttp/guzzle": "^7.0.1", "laravel/framework": "^8.75", "laravel/sanctum": "^2.11", "laravel/tinker": "^2.5", "laravel/ui": "^3.4", "laravelcollective/html": "^6.3", "maatwebsite/excel": "^3.1", "spatie/laravel-permission": "^5.5" }, "require-dev": { "facade/ignition": "^2.5", "fakerphp/faker": "^1.9.1", "laravel/breeze": "^1.9", "laravel/sail": "^1.0.1", "mockery/mockery": "^1.4.4", "nunomaduro/collision": "^5.10", "phpunit/phpunit": "^9.5.10" }, "autoload": { "psr-4": { "App\\": "app/", "Database\\Factories\\": "database/factories/", "Database\\Seeders\\": "database/seeders/" } }, "autoload-dev": { "psr-4": { "Tests\\": "tests/" } }, "scripts": { "post-autoload-dump": [ "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump", "@php artisan package:discover --ansi" ], "post-update-cmd": [ "@php artisan vendor:publish --tag=laravel-assets --ansi --force" ], "post-root-package-install": [ "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"" ], "post-create-project-cmd": [ "@php artisan key:generate --ansi" ] }, "extra": { "laravel": { "dont-discover": [] } }, "config": { "optimize-autoloader": true, "preferred-install": "dist", "sort-packages": true }, "minimum-stability": "dev", "prefer-stable": true }'
+
