@@ -77,13 +77,13 @@ spec:
             secretKeyRef:
               name: mysql-secret
               key: MYSQL_PASSWORD
-        volumeMounts:
-        - name: fueltrack-volume
-          mountPath: data/fueltrack
-      volumes:
-      - name: fueltrack-volume
-        persistentVolumeClaim:
-          claimName: fueltrack-pvc
+              #   volumeMounts:
+              #   - name: fueltrack-volume
+              #     mountPath: data/fueltrack
+              # volumes:
+              # - name: fueltrack-volume
+              #   persistentVolumeClaim:
+              #     claimName: fueltrack-pvc
 
 
 
