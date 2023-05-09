@@ -12,8 +12,8 @@ node {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         //def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
-                        sh "git config user.email hasino2258@gmail.com"
-                        sh "git config user.name hasin0"
+                        // sh "git config user.email hasino2258@gmail.com"
+                        // sh "git config user.name hasin0"
                         //sh "git switch master"
                         sh "cat fueltrack-depl.yaml"
                         sh "sed -i 's+hasino2258/fueltrack.*+hasino2258/fueltrack:${DOCKERTAG}+g' fueltrack-depl.yaml"
