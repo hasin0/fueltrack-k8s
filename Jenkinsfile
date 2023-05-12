@@ -10,20 +10,20 @@ node {
     stage('Update GIT') {
             script {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        //def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
-                        // sh "git config user.email hasino2258@gmail.com"
-                        // sh "git config user.name hasin0"
-                        //sh "git switch master"
+                    withCredentials([usernamePassword(credentialsId: 'gitHub', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                        def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
+                        sh "git config user.email hasino2258@gmail.com"
+                        sh "git config user.name hasin0"
+                        sh "git switch master"
                         sh "cat fueltrack-depl.yaml"
                         sh "sed -i 's+hasino2258/fueltrack.*+hasino2258/fueltrack:${DOCKERTAG}+g' fueltrack-depl.yaml"
                         sh "cat fueltrack-depl.yaml"
                         sh "git add ."
                         sh "git commit -m 'Done by Jenkins Job changemanifest: ${env.BUILD_NUMBER}'"
-                        sh "git push https://github.com/hasin0/fueltrack-k8s.git HEAD:main"
+                        // sh "git push https://github.com/hasin0/fueltrack-k8s.git HEAD:main"
 
 
-                        // sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/kubernetesmanifest.git HEAD:main"
+                        sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/fueltrack-k8s.git HEAD:main"
       }
     }
   }
