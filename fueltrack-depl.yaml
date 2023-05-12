@@ -11,7 +11,8 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: standard
   hostPath:
-    path: /fueltrack/storage/framework/sessions
+    path: /var/www/html/laravelapp/storage
+    #  /fueltrack/storage/framework/sessions
 
 
 
@@ -80,7 +81,7 @@ spec:
               key: MYSQL_PASSWORD
         volumeMounts:
         - name: fueltrack-volume
-          mountPath: /fueltrack/storage/framework/sessions
+          mountPath: /var/www/html/laravelapp/storage
       volumes:
       - name: fueltrack-volume
         persistentVolumeClaim:
