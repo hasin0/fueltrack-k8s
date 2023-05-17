@@ -1,29 +1,26 @@
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: fueltrack-qv
-  # namespace: fueltrack
-spec:
-  capacity:
-    storage: 2Gi
-  accessModes:
-  - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: standard
-  hostPath:
-    path: /var/www/html/laravelapp/storage
-    #  /fueltrack/storage/framework/sessions
-
-
-
----
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: fueltrack-qv-3
+#   # namespace: fueltrack
+# spec:
+#   capacity:
+#     storage: 2Gi
+#   accessModes:
+#   - ReadWriteOnce
+#   persistentVolumeReclaimPolicy: Retain
+#   storageClassName: standard
+#   hostPath:
+#     path: /mnt/data/myapp/vol01
+#     #   #  
+#   # /var/www/html/fueltrack/storage
 
 
 
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: fueltrack-pvc
+  name: fueltrack-pvc-3
   namespace: fueltrack
 spec:
   accessModes:
@@ -59,10 +56,16 @@ spec:
         image: hasino2258/fueltrack:latest
         ports:
         - containerPort: 9001
+        # args:
+        # - /bin/bash
+        # - -c
+        # - php artisan migrate --force && php artisan config:cache && cp -Rnp /var/www/html/fueltrack/storage/* /mnt
         envFrom:
         - configMapRef:
             name: fueltrack-configmap
         env:
+        # - name: CACHE_PATH
+        #   value: /var/www/html/fueltrack/storage/framework/cache/data
         - name: MYSQL_DATABASE
           value: fueltrack
         - name: MYSQL_HOST
@@ -80,12 +83,12 @@ spec:
               name: mysql-secret
               key: MYSQL_PASSWORD
         volumeMounts:
-        - name: fueltrack-volume
-          mountPath: /var/www/html/laravelapp/storage
+        - name: fueltrack-qv-3
+          mountPath: /var/www/html/fueltrack/storage/framework/sessions
       volumes:
-      - name: fueltrack-volume
+      - name: fueltrack-qv-3
         persistentVolumeClaim:
-          claimName: fueltrack-pvc
+          claimName: fueltrack-pvc-3
 
 
 

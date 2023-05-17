@@ -349,3 +349,13 @@ Kubernetes control plane is running at https://192.168.49.2:8443
 
 
 kubectl port-forward svc/argocd-server -n argocd 8181:443
+kubectl cp -R  /var/www/html/fueltrack/storage fueltrack-deployment-84d95fcd7d-brjh4:/var/www/html/fueltrack/storage
+
+kubectl cp  /var/www/html/fueltrack/storage fueltrack-deployment-8458c7f6d5-4n7dv:/var/www/html/fueltrack
+
+
+chmod -R o+rw /var/www/html/fueltrack/storage
+chmod -R o+rw /var/www/html/fueltrack/bootstrap
+chmod -R o+rw /var/www/html/fueltrack/public
+chmod -R o+rw /var/www/html/fueltrack/config
+fueltrack-deployment-6644f54cdf-tdk8p:/var/www/html/fueltrack
