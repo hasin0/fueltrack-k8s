@@ -27,8 +27,7 @@ xx
 
 # Warning  Failed     13s (x4 over 117s)  kubelet            Failed to pull image "fueltrack": rpc error: code = Unknown desc = Error response from daemon: pull access denied for fueltrack, repository does not exist or may require 'docker login': denied: requested access to the resource is denied
 
-step 1: minikube ssh docker pull hasino2258/fueltrack:v2
-
+step 1: minikube ssh docker pull hasino2258/fueltrack:latest
 step 2: create your deployment
 step 3:create your services
 
