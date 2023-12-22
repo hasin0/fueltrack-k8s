@@ -12,13 +12,13 @@ spec:
   hostPath:
     path: /data/mysql
 
----
 
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pvc
-  namespace: fueltrack
+  # namespace: fueltrack
 spec:
   accessModes:
   - ReadWriteOnce
@@ -31,8 +31,8 @@ spec:
   storageClassName: standard
 
 
----
 
+---
 
 
 
@@ -40,7 +40,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
-  namespace: fueltrack # namespace specified here
+  # namespace: fueltrack # namespace specified here
   labels:
     app: mysql
 spec:
@@ -84,275 +84,13 @@ spec:
 
 
 
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: mysql
-#   namespace: fueltrack # namespace specified here
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: mysql
-#   template:
-#     metadata:
-#       labels:
-#         app: mysql
-#     spec:
-#       containers:
-#       - name: mysql
-#         image: mysql:5.6
-#         env:
-#         - name: MYSQL_ROOT_PASSWORD
-#           valueFrom:
-#             secretKeyRef:
-#               name: mysql-secret
-#               key: MYSQL_ROOT_PASSWORD
-#         ports:
-#         - containerPort: 3306
-#         volumeMounts:
-#         - name: mysql-persistent-storage
-#           mountPath: /var/lib/mysql
-#       volumes:
-#       - name: mysql-persistent-storage
-#         persistentVolumeClaim:
-#           claimName: mysql-pvc
-
-
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: mysql-depl
-#   namespace: fueltrack # namespace specified here
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: mysql
-#   template:
-#     metadata:
-#       labels:
-#         app: mysql
-#     spec:
-#       volumes:
-#       - name: mysql-persistent-storage
-#         persistentVolumeClaim:
-#           claimName: mysql-pvc
-#       containers:
-#       - name: mysql
-#         image: mysql
-#         env:
-#         - name: MYSQL_DATABASE
-#           value: fueltrack
-#         - name: MYSQL_USER
-#           valueFrom:
-#             secretKeyRef:
-#               name: mysql-secret
-#               key: MYSQL_USER
-#         - name: MYSQL_ROOT_PASSWORD
-#           valueFrom:
-#             secretKeyRef:
-#               name: mysql-secret
-#               key: MYSQL_ROOT_PASSWORD
-#         - name: MYSQL_PASSWORD
-#           valueFrom:
-#             secretKeyRef:
-#               name: mysql-secret
-#               key: MYSQL_PASSWORD
-#         ports:
-#         - containerPort: 3306
-#         volumeMounts:
-#         - name: mysql-persistent-storage
-#           mountPath: /var/lib/mysql
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: mysql-depl
-#   namespace: fueltrack # namespace specified here
-# spec:
-#   replicas: 3
-#   selector:
-#     matchLabels:
-#       app: mysql
-#   template:
-#     metadata:
-#       labels:
-#         app: mysql
-#     spec:
-#       containers:
-#       - name: mysql
-#         image: mysql:5.7
-#         env:
-
-#         - name: MYSQL_DATABASE
-#           value: fueltrack
-#         - name: MYSQL_USER
-#           valueFrom:
-#             secretKeyRef:
-#               name: mysql-secret
-#               key: MYSQL_USER
-#         - name: MYSQL_ROOT_PASSWORD
-#           valueFrom:
-#             secretKeyRef:
-#               name: mysql-secret
-#               key: MYSQL_ROOT_PASSWORD
-
-#         - name: MYSQL_PASSWORD
-#           valueFrom:
-#             secretKeyRef:
-#               name: mysql-secret
-#               key: MYSQL_PASSWORD
-
-#         ports:
-#         - containerPort: 3306
-
-
-
-
-
-
-
-
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: mysql
-#   namespace: fueltrack # namespace specified here
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: mysql
-#   template:
-#     metadata:
-#       labels:
-#         app: mysql
-#     spec:
-#       containers:
-#       - name: mysql
-#         image: mysql:5.7
-#         envFrom:
-#         - configMapRef:
-#             name: mysql-configmap
-#         ports:
-#         - containerPort: 3306
-#         volumeMounts:
-#         - name: mysql-persistent-storage
-#           mountPath: /var/lib/mysql
-#       volumes:
-#       - name: mysql-persistent-storage
-#         persistentVolumeClaim:
-#           claimName: mysql-pvc
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: mysql-depl
-#   namespace: fueltrack # namespace specified here
-# spec:
-#   replicas: 3
-#   selector:
-#     matchLabels:
-#       app: mysql
-#   template:
-#     metadata:
-#       labels:
-#         app: mysql
-#     spec:
-#       containers:
-#       - name: mysql
-#         image: mysql:8.0
-#         env:
-#         - name: MYSQL_DATABASE
-#           value: fueltrack
-#         - name: MYSQL_USER
-#           valueFrom:
-#             secretKeyRef:
-#               name: mysql-secret
-#               key: MYSQL_USER
-#         - name: MYSQL_ROOT_PASSWORD
-#           valueFrom:
-#             secretKeyRef:
-#               name: mysql-secret
-#               key: MYSQL_ROOT_PASSWORD
-#         - name: MYSQL_PASSWORD
-#           valueFrom:
-#             secretKeyRef:
-#               name: mysql-secret
-#               key: MYSQL_PASSWORD
-#         ports:
-#         - containerPort: 3306
-#         volumeMounts:
-#         - name: mysql-persistent-storage
-#           mountPath: /var/lib/mysql # mount path in the container
-#       volumes:
-#       - name: mysql-persistent-storage
-#         persistentVolumeClaim:
-#           claimName: mysql-pvc # name of the persistent volume claim
-
-
 ---
-
-
 
 apiVersion: v1
 kind: Service
 metadata:
   name: mysql-service
-  namespace: fueltrack
+  # namespace: fueltrack
 spec:
   selector:
     app: mysql
@@ -361,6 +99,12 @@ spec:
     port: 3306
     targetPort: 3306
   clusterIP: None
+# apiVersion: apps/v1
+
+---
+
+
+
 # apiVersion: v1
 # kind: Service
 # metadata:
