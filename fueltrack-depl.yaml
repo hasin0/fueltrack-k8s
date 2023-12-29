@@ -16,6 +16,23 @@
 #   # /var/www/html/fueltrack/storage
 
 
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: fueltrack-pv
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: standard
+  hostPath:
+    path: /mnt/data # Replace with your actual host path
+
+
+
+---
 
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -29,6 +46,8 @@ spec:
     requests:
       storage: 2Gi
   storageClassName: standard
+  volumeName: fueltrack-pv
+
 
 
 
