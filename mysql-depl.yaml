@@ -1,92 +1,3 @@
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: mysql-pv
-spec:
-  capacity:
-    storage: 1Gi
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: standard
-  hostPath:
-    path: /data/mysql
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mysql-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: standard
-  selector:
-    matchLabels:
-      app: mysql
----
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: mysql
-spec:
-  serviceName: mysql
-  replicas: 1
-  selector:
-    matchLabels:
-      app: mysql
-  template:
-    metadata:
-      labels:
-        app: mysql
-    spec:
-      containers:
-        - name: mysql
-          image: mysql:5.7
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mysql-secret
-                  key: MYSQL_ROOT_PASSWORD
-          ports:
-            - containerPort: 3306
-          volumeMounts:
-            - name: mysql-persistent-storage
-              mountPath: /var/lib/mysql
-  volumeClaimTemplates:
-    - metadata:
-        name: mysql-persistent-storage
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        resources:
-          requests:
-            storage: 1Gi
-        storageClassName: standard  # Use the appropriate StorageClass
-
-
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: mysql-service
-# spec:
-#   selector:
-#     app: mysql
-#   ports:
-#     - protocol: TCP
-#       port: 3306
-#       targetPort: 3306
-#   clusterIP: ClusterIP
-
-
-
-
-
-
-
-
 # apiVersion: v1
 # kind: PersistentVolume
 # metadata:
@@ -117,12 +28,11 @@ spec:
 #       app: mysql
 # ---
 # apiVersion: apps/v1
-# kind: Deployment
+# kind: StatefulSet
 # metadata:
 #   name: mysql
-#   labels:
-#     app: mysql
 # spec:
+#   serviceName: mysql
 #   replicas: 1
 #   selector:
 #     matchLabels:
@@ -146,174 +56,264 @@ spec:
 #           volumeMounts:
 #             - name: mysql-persistent-storage
 #               mountPath: /var/lib/mysql
-#       volumes:
-#         - name: mysql-persistent-storage
-#           persistentVolumeClaim:
-#             claimName: mysql-pvc
+#   volumeClaimTemplates:
+#     - metadata:
+#         name: mysql-persistent-storage
+#       spec:
+#         accessModes: [ "ReadWriteOnce" ]
+#         resources:
+#           requests:
+#             storage: 1Gi
+#         storageClassName: standard  # Use the appropriate StorageClass
+
+
+# # apiVersion: v1
+# # kind: Service
+# # metadata:
+# #   name: mysql-service
+# # spec:
+# #   selector:
+# #     app: mysql
+# #   ports:
+# #     - protocol: TCP
+# #       port: 3306
+# #       targetPort: 3306
+# #   clusterIP: ClusterIP
+
+
+
+
+
+
+
+
+# # apiVersion: v1
+# # kind: PersistentVolume
+# # metadata:
+# #   name: mysql-pv
+# # spec:
+# #   capacity:
+# #     storage: 1Gi
+# #   accessModes:
+# #     - ReadWriteOnce
+# #   persistentVolumeReclaimPolicy: Retain
+# #   storageClassName: standard
+# #   hostPath:
+# #     path: /data/mysql
+# # ---
+# # apiVersion: v1
+# # kind: PersistentVolumeClaim
+# # metadata:
+# #   name: mysql-pvc
+# # spec:
+# #   accessModes:
+# #     - ReadWriteOnce
+# #   resources:
+# #     requests:
+# #       storage: 1Gi
+# #   storageClassName: standard
+# #   selector:
+# #     matchLabels:
+# #       app: mysql
+# # ---
+# # apiVersion: apps/v1
+# # kind: Deployment
+# # metadata:
+# #   name: mysql
+# #   labels:
+# #     app: mysql
+# # spec:
+# #   replicas: 1
+# #   selector:
+# #     matchLabels:
+# #       app: mysql
+# #   template:
+# #     metadata:
+# #       labels:
+# #         app: mysql
+# #     spec:
+# #       containers:
+# #         - name: mysql
+# #           image: mysql:5.7
+# #           env:
+# #             - name: MYSQL_ROOT_PASSWORD
+# #               valueFrom:
+# #                 secretKeyRef:
+# #                   name: mysql-secret
+# #                   key: MYSQL_ROOT_PASSWORD
+# #           ports:
+# #             - containerPort: 3306
+# #           volumeMounts:
+# #             - name: mysql-persistent-storage
+# #               mountPath: /var/lib/mysql
+# #       volumes:
+# #         - name: mysql-persistent-storage
+# #           persistentVolumeClaim:
+# #             claimName: mysql-pvc
+# # ---
+# # apiVersion: v1
+# # kind: Service
+# # metadata:
+# #   name: mysql-service
+# # spec:
+# #   selector:
+# #     app: mysql
+# #   ports:
+# #     - protocol: TCP
+# #       port: 3306
+# #       targetPort: 3306
+# #   clusterIP: ClusterIP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# # apiVersion: v1
+# # kind: PersistentVolume
+# # metadata:
+# #   name: mysql-pv
+# # spec:
+# #   capacity:
+# #     storage: 1Gi
+# #   accessModes:
+# #   - ReadWriteOnce
+# #   persistentVolumeReclaimPolicy: Retain
+# #   storageClassName: standard
+# #   hostPath:
+# #     path: /data/mysql
+
+
+# # ---
+# # apiVersion: v1
+# # kind: PersistentVolumeClaim
+# # metadata:
+# #   name: mysql-pvc
+# #   # namespace: fueltrack
+# # spec:
+# #   accessModes:
+# #   - ReadWriteOnce
+# #   resources:
+# #     requests:
+# #       storage: 1Gi
+# #   selector:
+# #     matchLabels:
+# #       app: mysql
+# #   storageClassName: standard
+
+
+
+# # ---
+
+
+
+# # apiVersion: apps/v1
+# # kind: Deployment
+# # metadata:
+# #   name: mysql
+# #   # namespace: fueltrack # namespace specified here
+# #   labels:
+# #     app: mysql
+# # spec:
+# #   replicas: 1
+# #   selector:
+# #     matchLabels:
+# #       app: mysql
+# #   template:
+# #     metadata:
+# #       labels:
+# #         app: mysql
+# #     spec:
+# #       containers:
+# #       - name: mysql
+# #         image: mysql:5.7
+# #         env:
+# #         - name: MYSQL_ROOT_PASSWORD
+# #           valueFrom:
+# #             secretKeyRef:
+# #               name: mysql-secret
+# #               key: MYSQL_ROOT_PASSWORD
+
+
+
+
+
+
+
+
+# #         # - name: MYSQL_ROOT_PASSWORD
+# #         #   value: mysql
+# #         ports:
+# #         - containerPort: 3306
+# #         volumeMounts:
+# #         - name: mysql-persistent-storage
+# #           mountPath: /var/lib/mysql
+# #       volumes:
+# #       - name: mysql-persistent-storage
+# #         persistentVolumeClaim:
+# #           claimName: mysql-pvc
+
+
+
+# # ---
+
+# # apiVersion: v1
+# # kind: Service
+# # metadata:
+# #   name: mysql-service
+# #   # namespace: fueltrack
+# # spec:
+# #   selector:
+# #     app: mysql
+# #   ports:
+# #   - protocol: TCP
+# #     port: 3306
+# #     targetPort: 3306
+# #   clusterIP: ClusterIP
+# # apiVersion: apps/v1
+
 # ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: mysql-service
-# spec:
-#   selector:
-#     app: mysql
-#   ports:
-#     - protocol: TCP
-#       port: 3306
-#       targetPort: 3306
-#   clusterIP: ClusterIP
 
 
 
+# # apiVersion: v1
+# # kind: Service
+# # metadata:
+# #   name: mysql-service
+# # spec:
+# #   selector:
+# #     app: mysql
+# #   ports:
+# #   - name: mysql
+# #     port: 3306
+# #     targetPort: 3306
+# #   type: ClusterIP
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: mysql-pv
-# spec:
-#   capacity:
-#     storage: 1Gi
-#   accessModes:
-#   - ReadWriteOnce
-#   persistentVolumeReclaimPolicy: Retain
-#   storageClassName: standard
-#   hostPath:
-#     path: /data/mysql
-
-
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: mysql-pvc
-#   # namespace: fueltrack
-# spec:
-#   accessModes:
-#   - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 1Gi
-#   selector:
-#     matchLabels:
-#       app: mysql
-#   storageClassName: standard
+# # apiVersion: v1
+# # kind: Service
+# # metadata:
+# #   name: mysql-service
+# # spec:
+# #   selector:
+# #     app: mysql
+# #   ports:
+# #     # - protocol: TCP
+# #     port: 3306
+# #     targetPort: 3306
 
 
 
 # ---
-
-
-
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: mysql
-#   # namespace: fueltrack # namespace specified here
-#   labels:
-#     app: mysql
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: mysql
-#   template:
-#     metadata:
-#       labels:
-#         app: mysql
-#     spec:
-#       containers:
-#       - name: mysql
-#         image: mysql:5.7
-#         env:
-#         - name: MYSQL_ROOT_PASSWORD
-#           valueFrom:
-#             secretKeyRef:
-#               name: mysql-secret
-#               key: MYSQL_ROOT_PASSWORD
-
-
-
-
-
-
-
-
-#         # - name: MYSQL_ROOT_PASSWORD
-#         #   value: mysql
-#         ports:
-#         - containerPort: 3306
-#         volumeMounts:
-#         - name: mysql-persistent-storage
-#           mountPath: /var/lib/mysql
-#       volumes:
-#       - name: mysql-persistent-storage
-#         persistentVolumeClaim:
-#           claimName: mysql-pvc
-
-
-
-# ---
-
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: mysql-service
-#   # namespace: fueltrack
-# spec:
-#   selector:
-#     app: mysql
-#   ports:
-#   - protocol: TCP
-#     port: 3306
-#     targetPort: 3306
-#   clusterIP: ClusterIP
-# apiVersion: apps/v1
-
----
-
-
-
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: mysql-service
-# spec:
-#   selector:
-#     app: mysql
-#   ports:
-#   - name: mysql
-#     port: 3306
-#     targetPort: 3306
-#   type: ClusterIP
-
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: mysql-service
-# spec:
-#   selector:
-#     app: mysql
-#   ports:
-#     # - protocol: TCP
-#     port: 3306
-#     targetPort: 3306
-
-
-
----
