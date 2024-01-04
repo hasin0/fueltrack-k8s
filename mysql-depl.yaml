@@ -62,8 +62,6 @@ spec:
           persistentVolumeClaim:
             claimName: mysql-pvc
 ---
-
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -76,6 +74,7 @@ spec:
       port: 3306
       targetPort: 3306
   type: ClusterIP
+
 
 # apiVersion: v1
 # kind: Service
