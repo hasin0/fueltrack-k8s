@@ -1,3 +1,11 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: standard
+provisioner: kubernetes.io/aws-ebs  # Replace with the appropriate provisioner for your environment
+# Add other parameters as needed
+
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
