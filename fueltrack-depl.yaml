@@ -170,7 +170,6 @@ spec:
 #     spec:
 #       containers:
 #       - name: fueltrack
-/
 #         ports:
 #         - containerPort: 9001
 #         envFrom:
@@ -224,7 +223,7 @@ spec:
 #       #     claimName: fueltrack-pvc
 #       containers:
 #       - name: fueltrack
-/
+
 #         ports:
 #         - containerPort: 9001
 #         envFrom:
