@@ -72,7 +72,7 @@ spec:
     spec:
       containers:
       - name: fueltrack
-        image: hasino2258/fueltrack:44
+        image: hasino2258/fueltrack:46
         ports:
         - containerPort: 9001
         # args:
