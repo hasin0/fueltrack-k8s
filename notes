@@ -20,7 +20,7 @@ kubectl config: Manage Kubernetes configuration settings. For example, kubectl c
 
 dd
 
-xx
+
 
 
 
