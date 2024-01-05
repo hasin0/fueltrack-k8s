@@ -18,9 +18,9 @@ kubectl rollout: Manage rollouts of a specified deployment. For example, kubectl
 
 kubectl config: Manage Kubernetes configuration settings. For example, kubectl config use-context <context-name> will switch the current context to the specified context.
 
+dd
 
 
-xx
 
 
 
