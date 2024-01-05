@@ -11,7 +11,7 @@ kubectl delete: Delete a specified resource. For example, kubectl delete pod <po
 kubectl exec: Execute a command in a container of a specified pod. For example, kubectl exec -it <pod-name> -- /bin/bash will open a bash shell inside the specified pod.
 
 kubectl logs: Print logs for a specified container in a pod. For example, kubectl logs <pod-name> -c <container-name> will print logs for the specified container in the specified pod.
-
+ff
 kubectl port-forward: Forward a local port to a port on a specified pod. For example, kubectl port-forward <pod-name> <local-port>:<remote-port> will forward traffic from the specified local port to the specified remote port on the specified pod.
 
 kubectl rollout: Manage rollouts of a specified deployment. For example, kubectl rollout status deployment/<deployment-name> will show the status of a specified deployment rollout.
