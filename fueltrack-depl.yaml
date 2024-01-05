@@ -53,7 +53,7 @@ spec:
     spec:
       containers:
       - name: fueltrack
-        image: hasino2258/fueltrack:latest
+        image: hasino2258/fueltrack:43
         ports:
         - containerPort: 9001
         # args:
@@ -151,7 +151,7 @@ spec:
 #     spec:
 #       containers:
 #       - name: fueltrack
-#         image: hasino2258/fueltrack:latest
+#         image: hasino2258/fueltrack:43
 #         ports:
 #         - containerPort: 9001
 #         envFrom:
@@ -205,7 +205,7 @@ spec:
 #       #     claimName: fueltrack-pvc
 #       containers:
 #       - name: fueltrack
-#         image: hasino2258/fueltrack:latest
+#         image: hasino2258/fueltrack:43
 #         ports:
 #         - containerPort: 9001
 #         envFrom:
@@ -254,7 +254,7 @@ spec:
 #     spec:
 #       containers:
 #       - name: fueltrack
-#         image: hasino2258/fueltrack:latest
+#         image: hasino2258/fueltrack:43
 #         ports:
 #         - containerPort: 9001
 #         envFrom:
