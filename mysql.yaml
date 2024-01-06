@@ -51,6 +51,8 @@ spec:
             secretKeyRef:
               name: mysql-secret
               key: MYSQL_ROOT_PASSWORD
+        - name: MYSQL_DATABASE # Add this environment variable
+          value: fueltrack # Set the value to the desired database name
         ports:
         - containerPort: 3306
         volumeMounts:
